@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Quotebook</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body ng-app="quoteBook" ng-controller="mainCtr">
+	
+<div ng-repeat="quote in quotes | orderBy:quote.author:sortReverse | filter:filterQuotes">
+	<ul>
+		<li>{{ quote.text }} <br /> -{{ quote.author }}</li>
+	</ul>
+</div>
+
+<div>
+	I want to...
+	<select ng-model="toDo">
+		<option value="add">Add a quote!</option>
+		<option value="remove">Remove a quote!</option>
+		<option value="sort">Sort the list!</option>
+		<option value="filter">Filter the list!</option>
+	</select>
+</div>
+
+<button ng-show="toDo === 'add'" ng-click='addQuote(newQuote)' id="add-quote">Add Quote</button>
+
+<button ng-show="toDo === 'remove'" ng-click='removeQuote(removeText)' id="remove-quote">Remove Quote</button>
+
+<input ng-show="toDo === 'sort'" type="radio" name="sort-choice" value="author" checked><span ng-show="toDo === 'sort'">Author</span>
+<input ng-show="toDo === 'sort'" type="radio" name="sort-choice" value="text"><span ng-show="toDo === 'sort'">Text</span>
+<button ng-show="toDo === 'sort'" ng-click='sortReverse = !sortReverse' id="sort-quotes">Sort Quotes</button>
+
+
+<input ng-show="toDo === 'filter'" ng-model="filterBy" placeholder="Search here!" type="text">
+<button ng-show="toDo === 'filter'" ng-click="filterQuotes = filterBy" id="filter-quotes">Filter Quotes</button>
+
+
+
+<div id="add-input-holder">
+	<input ng-show="toDo === 'add'" ng-model="newQuote.text" type="text" placeholder="Your quote here!" id="quote-text"> <br />
+	<input ng-show="toDo === 'add'" ng-model="newQuote.author" type="text" placeholder="Who wrote it?" id="quote-author">
+</div>
+
+<input ng-show="toDo === 'remove'" ng-model="removeText" type="text" placeholder="Get rid of a quote!" id="remove-text">
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/mainCtr.js"></script>
+<script src="js/dataService.js"></script>
+</body>
+</html>
