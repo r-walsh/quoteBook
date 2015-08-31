@@ -11,9 +11,9 @@ app.service('dataService', function() {
 	    { text: 'What even is a jQuery?', author: 'Tyler S. McGinnis'}
 	];
 
-	this.getData = function() {
-		return quotes;
-	};
+	// this.getData = function() {
+	// 	return quotes;
+	// };
 
 	this.addData = function(data) {
 		var isEmpty = false;
@@ -25,7 +25,7 @@ app.service('dataService', function() {
 		}
 		if (isEmpty === false) {
 			quotes.push(data);
-			var updateJSON = JSON.parse(JSON.stringify(quotes));
+			var updateJSON = JSON.stringify(quotes);
 			localStorage.setItem('updateJSON', updateJSON);
 		}
 	};
@@ -34,18 +34,17 @@ app.service('dataService', function() {
 		for (var i = 0; i < quotes.length; i++) {
 			if (quotes[i]['text'] == removeText || quotes[i]['author'] == removeText) {
 				quotes.splice(i, 1);
-				var updateJSON = JSON.parse(JSON.stringify(quotes));
+				var updateJSON = JSON.stringify(quotes);
 				localStorage.setItem('updateJSON', updateJSON);
 			}
 		}
 	}
 
-	this.getLocalData = function(data) {
+	this.getLocalData = function() {
 		if (localStorage.getItem('updateJSON')) {
-			return (localStorage.getItem('updateJSON'));
-		} else {
-			return quotes;
-		}
+			quotes = JSON.parse(localStorage.getItem('updateJSON'));
+		} 
+		return quotes;
 	}
 
 
