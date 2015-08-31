@@ -2,7 +2,7 @@ var app = angular.module('quoteBook');
 
 app.controller('mainCtr', function($scope, dataService) {
 
-	$scope.quotes = dataService.getData();
+	$scope.quotes = dataService.getLocalData();
 
 	$scope.addQuote = dataService.addData;
 

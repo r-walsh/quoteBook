@@ -15,10 +15,9 @@ app.service('dataService', function() {
 		return quotes;
 	};
 
-	this.addData = function(data) { debugger;
+	this.addData = function(data) {
 		var isEmpty = false;
 		for (var key in data) {
-			console.log(data[key]);
 			if (data[key] === '') {
 				isEmpty = true;
 				return;
@@ -26,6 +25,8 @@ app.service('dataService', function() {
 		}
 		if (isEmpty === false) {
 			quotes.push(data);
+			var updateJSON = JSON.parse(JSON.stringify(quotes));
+			localStorage.setItem('updateJSON', updateJSON);
 		}
 	};
 
@@ -33,11 +34,19 @@ app.service('dataService', function() {
 		for (var i = 0; i < quotes.length; i++) {
 			if (quotes[i]['text'] == removeText || quotes[i]['author'] == removeText) {
 				quotes.splice(i, 1);
+				var updateJSON = JSON.parse(JSON.stringify(quotes));
+				localStorage.setItem('updateJSON', updateJSON);
 			}
 		}
 	}
 
-	this.searchQuotes = function(searchTerm) {
-
+	this.getLocalData = function(data) {
+		if (localStorage.getItem('updateJSON')) {
+			return (localStorage.getItem('updateJSON'));
+		} else {
+			return quotes;
+		}
 	}
+
+
 });
