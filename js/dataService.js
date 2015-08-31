@@ -25,7 +25,12 @@ app.service('dataService', function() {
 		}
 		if (isEmpty === false) {
 			quotes.push(data);
-			var updateJSON = JSON.stringify(quotes);
+			var updateJSON = JSON.stringify(quotes, function(key, value) {
+				if (key === "$$hashKey") {
+					return undefined;
+				}
+				return value;
+			});
 			localStorage.setItem('updateJSON', updateJSON);
 		}
 	};
@@ -34,7 +39,12 @@ app.service('dataService', function() {
 		for (var i = 0; i < quotes.length; i++) {
 			if (quotes[i]['text'] == removeText || quotes[i]['author'] == removeText) {
 				quotes.splice(i, 1);
-				var updateJSON = JSON.stringify(quotes);
+				var updateJSON = JSON.stringify(quotes, function(key, value) {
+					if (key === "$$hashKey") {
+						return undefined;
+					}
+					return value;
+				});
 				localStorage.setItem('updateJSON', updateJSON);
 			}
 		}
